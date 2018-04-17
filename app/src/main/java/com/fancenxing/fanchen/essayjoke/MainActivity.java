@@ -1,8 +1,8 @@
 package com.fancenxing.fanchen.essayjoke;
 
-import com.fancenxing.fanchen.baselibrary.base.BaseActivity;
+import com.fancenxing.fanchen.framelibrary.BaseSkinActivity;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void setContentView() {
@@ -11,7 +11,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initTitle() {
-
     }
 
     @Override
