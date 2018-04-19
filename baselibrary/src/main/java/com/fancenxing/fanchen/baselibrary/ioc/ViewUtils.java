@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -95,8 +96,10 @@ public class ViewUtils {
                 mMethod.invoke(mObj, v);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
+                Log.e("testE", e.getCause().getMessage());
             } catch (InvocationTargetException e) {
                 e.printStackTrace();
+                Log.e("testE", e.getCause().getMessage());
             }
 
         }
