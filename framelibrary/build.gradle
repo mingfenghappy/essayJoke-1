@@ -26,4 +26,5 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:26.+'
     compile project(':baselibrary')
+    compile 'com.google.code.gson:gson:2.8.4'
 }

@@ -4,7 +4,6 @@ import android.app.Application;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import com.alipay.euler.andfix.patch.PatchManager;
 import com.fancenxing.fanchen.baselibrary.base.ExceptionCrashHandler;
 
 /**
@@ -14,7 +13,7 @@ import com.fancenxing.fanchen.baselibrary.base.ExceptionCrashHandler;
 
 public class BaseApplication extends Application {
 
-    public static PatchManager patchManager;
+//    public static PatchManager patchManager;
 
     @Override
     public void onCreate() {
@@ -24,12 +23,12 @@ public class BaseApplication extends Application {
         ExceptionCrashHandler.getInstance()
                 .init(this);
 
-        //初始化阿里的热修复
-        patchManager = new PatchManager(this);
-        patchManager.init(getVersion());
-
-        //加载之前的patch
-        patchManager.loadPatch();
+//        //初始化阿里的热修复
+//        patchManager = new PatchManager(this);
+//        patchManager.init(getVersion());
+//
+//        //加载之前的patch
+//        patchManager.loadPatch();
     }
 
 
