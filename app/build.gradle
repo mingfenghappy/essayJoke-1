@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -21,9 +22,10 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':framelibrary')
-
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:26.+'
     compile 'com.alipay.euler:andfix:0.5.0@aar'
+    compile 'com.android.support:recyclerview-v7:26.0.0-alpha1'
+    compile 'com.android.support:design:26.+'
 }

@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".BaseApplication"
@@ -14,15 +15,55 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
+        <!-- <activity android:name=".RecyclerViewActivity"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <!-- <activity -->
+        <!-- android:name=".MainActivity" -->
+        <!-- android:theme="@style/Theme.AppCompat.Light.NoActionBar"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
+        <activity android:name=".TestActivity" />
+
+        <service android:name=".MessageService">
+            <intent-filter>
+                <action android:name="com.fancenxing.fanchen.aidl.user" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+        <service android:name=".KeepLiveService" />
+        <service
+            android:name=".GuardService"
+            android:process=":guardService" />
+        <service
+            android:name=".JobWeakUpService"
+            android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+
+        <activity android:name=".BasicActivity" />
+        <activity
+            android:name=".SelectImageActivity"
+            android:label="@string/title_activity_select_image"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TestImageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TestActivity"></activity>
     </application>
 
 </manifest>

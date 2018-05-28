@@ -10,10 +10,10 @@ import java.util.Map;
 public interface IHttpEngine {
 
     //get请求
-    void get(String url, Map<String,Object> params,EngineCallback callback);
+    void get(boolean cache,String url, Map<String,Object> params,EngineCallback callback);
 
     //post请求
-    void post(String url, Map<String,Object> params,EngineCallback callback);
+    void post(boolean cache,String url, Map<String,Object> params,EngineCallback callback);
 
     //下载文件
 

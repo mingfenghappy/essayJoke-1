@@ -1,24 +1,23 @@
 package com.fancenxing.fanchen.essayjoke;
 
+import android.content.Intent;
+import android.os.Build;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.fancenxing.fanchen.baselibrary.http.HttpUtils;
 import com.fancenxing.fanchen.baselibrary.ioc.OnClick;
 import com.fancenxing.fanchen.baselibrary.ioc.ViewById;
 import com.fancenxing.fanchen.framelibrary.BaseSkinActivity;
-import com.fancenxing.fanchen.framelibrary.DefaultNavigationBar;
-import com.fancenxing.fanchen.framelibrary.HttpCallback;
+import com.fancenxing.fanchen.framelibrary.skin.SkinManager;
 
 public class MainActivity extends BaseSkinActivity {
 
 
     @ViewById(R.id.ll_parent)
     LinearLayout llParent;
-    @ViewById(R.id.test)
-    private Button mButton;
+    @ViewById(R.id.iv_bg)
+    ImageView ivBg;
 
     @Override
     protected void setContentView() {
@@ -27,16 +26,6 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initTitle() {
-        new DefaultNavigationBar.Builder(this)
-                .setTitle("测试标题")
-                .setRightTitle("右边标题")
-                .setRightClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(MainActivity.this, "onClick---", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .builder();
     }
 
     @Override
@@ -46,25 +35,41 @@ public class MainActivity extends BaseSkinActivity {
 
     @Override
     protected void initData() {
-        HttpUtils.with(this)
-                .url("")
-                .addParams(null)
-                .get()
-                .execute(new HttpCallback<Bean>() {
-                    @Override
-                    public void onError(Exception e) {
+        Intent intent = new Intent(this, KeepLiveService.class);
+        startService(intent);
 
-                    }
+        startService(new Intent(this, GuardService.class));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            startService(new Intent(this, JobWeakUpService.class));
+        }
 
-                    @Override
-                    public void onSuccess(Bean result) {
-
-                    }
-                });
     }
 
-    @OnClick(R.id.test)
+    @OnClick({R.id.change_skin, R.id.restore_default, R.id.skip})
     public void test(View view) {
+        switch (view.getId()) {
+            case R.id.change_skin:
+                changeSkin();
+                break;
+            case R.id.restore_default:
+                restoreDefault();
+                break;
+            case R.id.skip:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                break;
+        }
 
     }
+
+    private void restoreDefault() {
+        SkinManager.getInstance()
+                .restoreDefault();
+    }
+
+    private void changeSkin() {
+        SkinManager.getInstance()
+                .loadSkin("/storage/emulated/0/Android/data/skin.skin");
+    }
+
 }

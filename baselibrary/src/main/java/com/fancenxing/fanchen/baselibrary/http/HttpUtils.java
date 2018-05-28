@@ -1,7 +1,6 @@
 package com.fancenxing.fanchen.baselibrary.http;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -28,6 +27,8 @@ public class HttpUtils {
 
     private Map<String, Object> mParams;
 
+    private boolean mCache = false;
+
     private HttpUtils(Context context) {
         mContext = context;
         mParams = new HashMap<>();
@@ -52,6 +53,11 @@ public class HttpUtils {
         return this;
     }
 
+    public HttpUtils cache(boolean cache) {
+        this.mCache = cache;
+        return this;
+    }
+
     //添加参数
     public HttpUtils addParams(String key, Object value) {
         mParams.put(key, value);
@@ -73,10 +79,10 @@ public class HttpUtils {
         callback.onPreExecute(mContext, mParams);
         //判断执行方法
         if (mType == POST_TYPE) {
-            post(mUrl, mParams, callback);
+            post(mCache, mUrl, mParams, callback);
         }
         if (mType == GET_TYPE) {
-            get(mUrl, mParams, callback);
+            get(mCache, mUrl, mParams, callback);
         }
     }
 
@@ -85,7 +91,7 @@ public class HttpUtils {
     }
 
     //默认OkHttpEngine
-    private static IHttpEngine mHttpEngine = new OkHttpEngine();
+    private static IHttpEngine mHttpEngine;
 
     //初始化引擎
     public static void init(IHttpEngine httpEngine) {
@@ -101,12 +107,12 @@ public class HttpUtils {
         mHttpEngine = httpEngine;
     }
 
-    private void get(String url, Map<String, Object> params, EngineCallback callback) {
-        mHttpEngine.get(url, params, callback);
+    private void get(boolean cache, String url, Map<String, Object> params, EngineCallback callback) {
+        mHttpEngine.get(mCache, url, params, callback);
     }
 
-    private void post(String url, Map<String, Object> params, EngineCallback callback) {
-        mHttpEngine.post(url, params, callback);
+    private void post(boolean cache, String url, Map<String, Object> params, EngineCallback callback) {
+        mHttpEngine.post(cache, url, params, callback);
     }
 
 
@@ -115,7 +121,6 @@ public class HttpUtils {
     }
 
     public static Class<?> analysisClazzInfo(Object object) {
-        Log.e("sun", "--------------");
         Type genType = object.getClass().getGenericSuperclass();
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
         return (Class<?>) params[0];

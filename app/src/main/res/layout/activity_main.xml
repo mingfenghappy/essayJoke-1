@@ -2,20 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
     android:id="@+id/ll_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context="com.fancenxing.fanchen.essayjoke.MainActivity">
 
     <Button
-        android:id="@+id/test"
+        android:id="@+id/change_skin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="换肤" />
 
+    <Button
+        android:id="@+id/restore_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="默认" />
+
+    <Button
+        android:id="@+id/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="跳转" />
+
+    <ImageView
+        android:id="@+id/iv_bg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/main_bg" />
 </LinearLayout>
