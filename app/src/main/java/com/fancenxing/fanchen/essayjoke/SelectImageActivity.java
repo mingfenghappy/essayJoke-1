@@ -7,8 +7,12 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.fancenxing.fanchen.baselibrary.base.BaseActivity;
+import com.fancenxing.fanchen.essayjoke.pickImage.SelectImageListAdapter;
 
 import java.util.ArrayList;
 
@@ -32,9 +36,13 @@ public class SelectImageActivity extends BaseActivity {
     //已选择好的照片
     private ArrayList<String> mResultList;
 
+    private SelectImageListAdapter mImageAdapter;
+    private RecyclerView mRvImage;
+
     @Override
     protected void setContentView() {
         setContentView(R.layout.activity_select_image);
+        mRvImage = findViewById(R.id.rv_image);
         Intent intent = getIntent();
         mMode = intent.getIntExtra(EXTRA_MODE, MODE_MULTI);
         mShowCamera = intent.getBooleanExtra(EXTRA_SHOW_CAMERA, true);
@@ -71,7 +79,20 @@ public class SelectImageActivity extends BaseActivity {
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            if (data == null || data.getCount() <= 0) {
+                return;
+            }
+            if (mShowCamera && !mResultList.contains(EXTRA_SHOW_CAMERA)) {
+                mResultList.add(EXTRA_SHOW_CAMERA);
+            }
             //解析，封装到集合
+            while (data.moveToNext()) {
+                String path = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
+                if (!mResultList.contains(path)) {
+                    mResultList.add(path);
+                }
+            }
+            showImageList();
         }
 
         @Override
@@ -79,6 +100,19 @@ public class SelectImageActivity extends BaseActivity {
 
         }
     };
+
+    /**
+     * 显示图片列表
+     */
+    private void showImageList() {
+        if (mImageAdapter == null) {
+            mImageAdapter = new SelectImageListAdapter(this, mResultList);
+            mImageAdapter.setMaxCount(mMaxCount);
+            mRvImage.setAdapter(mImageAdapter);
+            mRvImage.setLayoutManager(new GridLayoutManager(this, 3));
+        }
+        mImageAdapter.notifyDataSetChanged();
+    }
 
     @Override
     protected void initTitle() {
@@ -95,4 +129,10 @@ public class SelectImageActivity extends BaseActivity {
 
     }
 
+    public void imageSelected(View view) {
+        Intent intent = new Intent();
+        intent.putStringArrayListExtra(SelectImageActivity.EXTRA_RESULT_LIST, mImageAdapter.getSelectList());
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 }

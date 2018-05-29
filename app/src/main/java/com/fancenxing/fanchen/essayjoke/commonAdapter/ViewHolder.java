@@ -61,12 +61,16 @@ public class ViewHolder extends RecyclerView.ViewHolder {
         return this;
     }
 
-    public ViewHolder setImageLoader(int viewId, HolderImageLoader imageLoader, String imgUrl) {
+    public ViewHolder loadImage(int viewId, HolderImageLoader imageLoader, String imgUrl) {
         ImageView iv = getView(viewId);
         imageLoader.loadImage(iv, imgUrl);
         return this;
     }
 
+    public ViewHolder setVisiable(int viewId, int visibility) {
+        getView(viewId).setVisibility(visibility);
+        return this;
+    }
 
     public static abstract class HolderImageLoader {
 

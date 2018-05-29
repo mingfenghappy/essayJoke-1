@@ -1,6 +1,7 @@
 package com.fancenxing.fanchen.essayjoke;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 
 import com.fancenxing.fanchen.baselibrary.base.BaseActivity;
@@ -9,7 +10,8 @@ import java.util.ArrayList;
 
 public class TestImageActivity extends BaseActivity {
 
-    private ArrayList<String> mResults=new ArrayList<>();
+    private ArrayList<String> mResults = new ArrayList<>();
+    public static final int GET_IMG = 300;
 
     @Override
     protected void setContentView() {
@@ -37,6 +39,15 @@ public class TestImageActivity extends BaseActivity {
         intent.putExtra(SelectImageActivity.EXTRA_MAX_COUNT, 9);
         intent.putExtra(SelectImageActivity.EXTRA_SHOW_CAMERA, true);
         intent.putStringArrayListExtra(SelectImageActivity.EXTRA_RESULT_LIST, mResults);
-        startActivity(intent);
+        startActivityForResult(intent, GET_IMG);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == GET_IMG && data != null) {
+            ArrayList<String> list = data.getStringArrayListExtra(SelectImageActivity.EXTRA_RESULT_LIST);
+            Log.e("sun", list.toString());
+        }
     }
 }
