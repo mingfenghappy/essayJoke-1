@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 
 import com.fancenxing.fanchen.baselibrary.base.ExceptionCrashHandler;
 import com.fancenxing.fanchen.baselibrary.http.HttpUtils;
+import com.fancenxing.fanchen.essayjoke.hook.HookStartActivityUtil;
 import com.fancenxing.fanchen.framelibrary.http.OkHttpEngine;
 import com.fancenxing.fanchen.framelibrary.skin.SkinManager;
 
@@ -35,6 +36,15 @@ public class BaseApplication extends Application {
         HttpUtils.init(new OkHttpEngine());
         SkinManager.getInstance()
                 .init(this);
+        try {
+            HookStartActivityUtil activityUtil = new HookStartActivityUtil(this, ProxyActivity.class);
+            activityUtil.hookStartActivity();
+            activityUtil.hookLaunchActivity();
+            activityUtil.hookAppcompatActivity();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

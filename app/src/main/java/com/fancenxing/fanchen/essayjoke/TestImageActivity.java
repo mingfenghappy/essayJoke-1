@@ -20,7 +20,6 @@ public class TestImageActivity extends BaseActivity {
 
     @Override
     protected void initTitle() {
-
     }
 
     @Override
@@ -30,16 +29,19 @@ public class TestImageActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+//        Intent intent = new Intent(this,TestActivity.class);
+//        startActivity(intent);
     }
 
     public void selectImage(View view) {
-        Intent intent = new Intent(this, SelectImageActivity.class);
-        intent.putExtra(SelectImageActivity.EXTRA_MODE, SelectImageActivity.MODE_MULTI);
-        intent.putExtra(SelectImageActivity.EXTRA_MAX_COUNT, 9);
-        intent.putExtra(SelectImageActivity.EXTRA_SHOW_CAMERA, true);
-        intent.putStringArrayListExtra(SelectImageActivity.EXTRA_RESULT_LIST, mResults);
-        startActivityForResult(intent, GET_IMG);
+        Intent intent = new Intent(this,TestActivity.class);
+        startActivity(intent);
+//        Intent intent = new Intent(this, SelectImageActivity.class);
+//        intent.putExtra(SelectImageActivity.EXTRA_MODE, SelectImageActivity.MODE_MULTI);
+//        intent.putExtra(SelectImageActivity.EXTRA_MAX_COUNT, 9);
+//        intent.putExtra(SelectImageActivity.EXTRA_SHOW_CAMERA, true);
+//        intent.putStringArrayListExtra(SelectImageActivity.EXTRA_RESULT_LIST, mResults);
+//        startActivityForResult(intent, GET_IMG);
     }
 
     @Override
