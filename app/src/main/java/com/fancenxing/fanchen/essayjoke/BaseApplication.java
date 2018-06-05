@@ -5,10 +5,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import com.fancenxing.fanchen.baselibrary.base.ExceptionCrashHandler;
+import com.fancenxing.fanchen.baselibrary.fixBug.FixDexManager;
 import com.fancenxing.fanchen.baselibrary.http.HttpUtils;
 import com.fancenxing.fanchen.essayjoke.hook.HookStartActivityUtil;
 import com.fancenxing.fanchen.framelibrary.http.OkHttpEngine;
-import com.fancenxing.fanchen.framelibrary.skin.SkinManager;
 
 /**
  * 功能描述：
@@ -34,8 +34,14 @@ public class BaseApplication extends Application {
 //        //加载之前的patch
 //        patchManager.loadPatch();
         HttpUtils.init(new OkHttpEngine());
-        SkinManager.getInstance()
-                .init(this);
+//        SkinManager.getInstance()
+//                .init(this);
+        try {
+            FixDexManager dexManager = new FixDexManager(this);
+            dexManager.fixDex("/storage/emulated/0/plugin.apk");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         try {
             HookStartActivityUtil activityUtil = new HookStartActivityUtil(this, ProxyActivity.class);
             activityUtil.hookStartActivity();

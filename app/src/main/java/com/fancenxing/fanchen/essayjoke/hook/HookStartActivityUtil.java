@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
@@ -60,11 +61,11 @@ public class HookStartActivityUtil {
             if ("startActivity".equals(methodName)) {
                 Intent origin = (Intent) args[2];
                 String className = origin.getComponent().getClassName();
-                if ("com.fancenxing.fanchen.essayjoke.TestActivity".equals(className)) {
-                    Intent newIntent = new Intent(mContext, mProxyClass);
-                    newIntent.putExtra(EXTRA_ORIGIN, origin);
-                    args[2] = newIntent;
-                }
+//                if ("com.fancenxing.fanchen.plugintest.TestActivity".equals(className)) {
+                Intent newIntent = new Intent(mContext, mProxyClass);
+                newIntent.putExtra(EXTRA_ORIGIN, origin);
+                args[2] = newIntent;
+//                }
             }
             return method.invoke(mObj, args);
         }
@@ -156,5 +157,11 @@ public class HookStartActivityUtil {
             }
             return method.invoke(mObj, args);
         }
+    }
+
+
+    public void hookLayoutInflater() {
+        LayoutInflater inflater = LayoutInflater.from(mContext);
+
     }
 }

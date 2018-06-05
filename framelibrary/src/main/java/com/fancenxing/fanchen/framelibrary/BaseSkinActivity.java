@@ -33,7 +33,7 @@ import java.util.List;
  * Created by 孙中宛 on 2018/4/17.
  */
 
-public abstract class BaseSkinActivity extends BaseActivity implements LayoutInflater.Factory2,ISkinChangeListener {
+public abstract class BaseSkinActivity extends BaseActivity implements LayoutInflater.Factory2, ISkinChangeListener {
 
     SkinAppCompatViewInflater mAppCompatViewInflater;
 

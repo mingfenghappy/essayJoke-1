@@ -1,11 +1,13 @@
 package com.fancenxing.fanchen.essayjoke;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
 import com.fancenxing.fanchen.baselibrary.base.BaseActivity;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class TestImageActivity extends BaseActivity {
@@ -34,7 +36,8 @@ public class TestImageActivity extends BaseActivity {
     }
 
     public void selectImage(View view) {
-        Intent intent = new Intent(this,TestActivity.class);
+        Intent intent = new Intent();
+        intent.setClassName("com.fancenxing.fanchen.plugintest","com.fancenxing.fanchen.plugintest.TestActivity");
         startActivity(intent);
 //        Intent intent = new Intent(this, SelectImageActivity.class);
 //        intent.putExtra(SelectImageActivity.EXTRA_MODE, SelectImageActivity.MODE_MULTI);
@@ -50,6 +53,17 @@ public class TestImageActivity extends BaseActivity {
         if (resultCode == RESULT_OK && requestCode == GET_IMG && data != null) {
             ArrayList<String> list = data.getStringArrayListExtra(SelectImageActivity.EXTRA_RESULT_LIST);
             Log.e("sun", list.toString());
+        }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        try {
+            Field resourcesField = newBase.getClass().getDeclaredField("mResources");
+            Log.e("sun", "----resourceField----->" + resourcesField.getName());
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
         }
     }
 }
